@@ -26,7 +26,7 @@ class _NewApiService implements NewApiService {
     final queryParameters = <String, dynamic>{r'page': page};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<List<dynamic>>(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<List<TaskModel>>>(Options(
       method: 'GET',
       headers: _headers,
@@ -43,7 +43,10 @@ class _NewApiService implements NewApiService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    var value = _result.data!
+    final Map<String, dynamic> responseData =
+        _result.data as Map<String, dynamic>;
+    final List<dynamic> taskDataList = responseData['tasks'];
+    List<TaskModel> value = taskDataList
         .map((dynamic i) => TaskModel.fromJson(i as Map<String, dynamic>))
         .toList();
     final httpResponse = HttpResponse(value, _result);

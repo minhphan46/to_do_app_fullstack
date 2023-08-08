@@ -9,14 +9,20 @@ class TaskModel extends TaskEntity {
     DateTime? date,
     bool? done,
     Color? color,
-  });
+  }) : super(
+          id: id,
+          title: title,
+          date: date,
+          done: done,
+          color: color,
+        );
 
   factory TaskModel.fromJson(Map<String, dynamic> json) {
     return TaskModel(
-      id: json['id'] ?? DateTime.now().toString(),
+      id: json['_id'] ?? DateTime.now().toString(),
       title: json['title'] ?? "",
-      date: json['date'] ?? DateTime.now(),
       done: json['done'] ?? false,
+      date: DateTime.tryParse(json['createdAt']) ?? DateTime.now(),
       color: json['color'] ??
           Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
               .withOpacity(1.0),
