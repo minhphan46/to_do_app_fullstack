@@ -1,3 +1,4 @@
+import 'package:to_do_mobi/features/task/data/models/task_local.dart';
 import 'package:to_do_mobi/features/task/domain/entities/task.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
@@ -26,6 +27,27 @@ class TaskModel extends TaskEntity {
       color: json['color'] ??
           Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
               .withOpacity(1.0),
+    );
+  }
+
+  factory TaskModel.fromEntity(TaskEntity entity) {
+    return TaskModel(
+      id: entity.id,
+      title: entity.title,
+      done: entity.done,
+      date: entity.date,
+      color: entity.color,
+    );
+  }
+
+  factory TaskModel.fromLocal(TaskLocalModel localModel) {
+    return TaskModel(
+      id: localModel.id,
+      title: localModel.title,
+      done: localModel.done,
+      date: DateTime.fromMillisecondsSinceEpoch(localModel.date!),
+      color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+          .withOpacity(1.0),
     );
   }
 }
