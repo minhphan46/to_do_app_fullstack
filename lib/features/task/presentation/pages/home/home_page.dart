@@ -37,7 +37,7 @@ class HomePage extends StatelessWidget {
           );
         } else if (state is RemoteTasksError) {
           return const Center(
-            child: Icon(Icons.refresh),
+            child: Icon(Icons.error),
           );
         } else if (state is RemoteTasksDone) {
           return ListView.builder(

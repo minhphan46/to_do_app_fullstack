@@ -29,6 +29,7 @@ class _NewApiService implements NewApiService {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<List<TaskModel>>>(Options(
       method: 'GET',
+      contentType: 'application/json', // Added contentType here
       headers: _headers,
       extra: _extra,
     )

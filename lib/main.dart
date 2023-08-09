@@ -8,6 +8,7 @@ import 'package:to_do_mobi/injection_container.dart';
 import 'features/task/presentation/bloc/task/remote/remote_task_event.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await initializeDependencies();
   runApp(const MyApp());
 }
