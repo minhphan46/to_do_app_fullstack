@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do_mobi/features/task/presentation/bloc/task/remote/remote_task_event.dart';
 import 'package:to_do_mobi/features/task/presentation/bloc/task/remote/remote_task_state.dart';
 import '../../../../../../core/resources/data_state.dart';
-import '../../../../domain/usecases/get_task.dart';
+import '../../../../domain/usecases/remote/get_tasks.dart';
 
 class RemoteTasksBloc extends Bloc<RemoteTasksEvent, RemoteTasksState> {
   final GetTasksUseCase _getTasksUseCase;

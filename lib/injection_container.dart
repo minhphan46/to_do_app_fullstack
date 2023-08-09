@@ -2,14 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:to_do_mobi/features/task/data/data_sources/remote/new_api_service.dart';
 import 'package:to_do_mobi/features/task/domain/repository/task_repository.dart';
-import 'package:to_do_mobi/features/task/domain/usecases/get_task.dart';
+import 'package:to_do_mobi/features/task/domain/usecases/remote/get_tasks.dart';
 import 'package:to_do_mobi/features/task/presentation/bloc/task/remote/remote_task_bloc.dart';
 
 import 'features/task/data/data_sources/local/app_database.dart';
 import 'features/task/data/repository/task_repository_impl.dart';
-import 'features/task/domain/usecases/get_local_task.dart';
-import 'features/task/domain/usecases/remove_task.dart';
-import 'features/task/domain/usecases/save_local_task.dart';
+import 'features/task/domain/usecases/local/get_local_task.dart';
+import 'features/task/domain/usecases/local/remove_task.dart';
+import 'features/task/domain/usecases/local/save_local_task.dart';
 import 'features/task/presentation/bloc/task/local/local_task_bloc.dart';
 
 final sl = GetIt.instance;

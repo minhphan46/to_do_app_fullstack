@@ -17,9 +17,7 @@ class TaskRepositoryImpl implements TaskRepository {
   @override
   Future<DataState<List<TaskModel>>> getTasks() async {
     try {
-      final httpResponse = await _newApiService.getTasks(
-        page: 1,
-      );
+      final httpResponse = await _newApiService.getTasks();
 
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);

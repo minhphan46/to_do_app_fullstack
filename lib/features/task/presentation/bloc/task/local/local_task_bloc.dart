@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:to_do_mobi/features/task/domain/usecases/get_local_task.dart';
-import 'package:to_do_mobi/features/task/domain/usecases/remove_task.dart';
-import 'package:to_do_mobi/features/task/domain/usecases/save_local_task.dart';
+import 'package:to_do_mobi/features/task/domain/usecases/local/get_local_task.dart';
+import 'package:to_do_mobi/features/task/domain/usecases/local/remove_task.dart';
+import 'package:to_do_mobi/features/task/domain/usecases/local/save_local_task.dart';
 import 'package:to_do_mobi/features/task/presentation/bloc/task/local/local_task_event.dart';
 import 'package:to_do_mobi/features/task/presentation/bloc/task/local/local_task_state.dart';
 

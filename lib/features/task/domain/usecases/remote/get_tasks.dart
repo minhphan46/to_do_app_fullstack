@@ -2,7 +2,7 @@ import 'package:to_do_mobi/core/resources/data_state.dart';
 import 'package:to_do_mobi/core/usecases/usecase.dart';
 import 'package:to_do_mobi/features/task/domain/entities/task.dart';
 
-import '../repository/task_repository.dart';
+import '../../repository/task_repository.dart';
 
 class GetTasksUseCase implements UseCase<DataState<List<TaskEntity>>, void> {
   final TaskRepository _taskRepository;

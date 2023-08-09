@@ -6,9 +6,9 @@ abstract class TaskRepository {
   // API remote
   Future<DataState<List<TaskEntity>>> getTasks();
   Future<DataState<TaskEntity>> getTask(int id);
-  Future<DataState<TaskEntity>> createTask(TaskEntity task);
-  Future<DataState<TaskEntity>> updateTask(TaskEntity task);
-  Future<DataState<TaskEntity>> deleteTask(int id);
+  Future<void> createTask(TaskEntity task);
+  Future<void> updateTask(TaskEntity task);
+  Future<void> deleteTask(int id);
 
   // database local
   Future<List<TaskEntity>> getTasksLocal();
