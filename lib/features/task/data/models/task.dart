@@ -30,6 +30,13 @@ class TaskModel extends TaskEntity {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'title': title,
+      'done': done,
+    };
+  }
+
   factory TaskModel.fromEntity(TaskEntity entity) {
     return TaskModel(
       id: entity.id,

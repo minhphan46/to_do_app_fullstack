@@ -22,7 +22,6 @@ class TaskRepositoryImpl implements TaskRepository {
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
       } else {
-        print("error ${httpResponse.response.statusMessage}");
         return DataFailed(DioException(
           error: httpResponse.response.statusMessage,
           response: httpResponse.response,
@@ -31,33 +30,90 @@ class TaskRepositoryImpl implements TaskRepository {
         ));
       }
     } on DioException catch (e) {
-      print("err: $e");
       return DataFailed(e);
     }
   }
 
   @override
-  Future<DataState<TaskModel>> createTask(TaskEntity task) {
-    // TODO: implement createTask
-    throw UnimplementedError();
+  Future<DataState<TaskModel>> getTask(String id) async {
+    try {
+      final httpResponse = await _newApiService.getSingleTask(id);
+
+      if (httpResponse.response.statusCode == HttpStatus.ok) {
+        return DataSuccess(httpResponse.data);
+      } else {
+        return DataFailed(DioException(
+          error: httpResponse.response.statusMessage,
+          response: httpResponse.response,
+          type: DioExceptionType.badResponse,
+          requestOptions: httpResponse.response.requestOptions,
+        ));
+      }
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
   }
 
   @override
-  Future<DataState<TaskModel>> deleteTask(int id) {
-    // TODO: implement deleteTask
-    throw UnimplementedError();
+  Future<DataState<TaskModel>> createTask(TaskEntity task) async {
+    try {
+      final httpResponse =
+          await _newApiService.createTask(TaskModel.fromEntity(task));
+
+      if (httpResponse.response.statusCode == HttpStatus.ok) {
+        return DataSuccess(httpResponse.data);
+      } else {
+        return DataFailed(DioException(
+          error: httpResponse.response.statusMessage,
+          response: httpResponse.response,
+          type: DioExceptionType.badResponse,
+          requestOptions: httpResponse.response.requestOptions,
+        ));
+      }
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
   }
 
   @override
-  Future<DataState<TaskModel>> getTask(int id) {
-    // TODO: implement getTask
-    throw UnimplementedError();
+  Future<DataState<TaskModel>> deleteTask(String id) async {
+    try {
+      final httpResponse = await _newApiService.deleteTask(id);
+
+      if (httpResponse.response.statusCode == HttpStatus.ok) {
+        return const DataSuccess(null);
+      } else {
+        return DataFailed(DioException(
+          error: httpResponse.response.statusMessage,
+          response: httpResponse.response,
+          type: DioExceptionType.badResponse,
+          requestOptions: httpResponse.response.requestOptions,
+        ));
+      }
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
   }
 
   @override
-  Future<DataState<TaskModel>> updateTask(TaskEntity task) {
-    // TODO: implement updateTask
-    throw UnimplementedError();
+  Future<DataState<TaskModel>> updateTask(TaskEntity task) async {
+    try {
+      final httpResponse =
+          await _newApiService.updateTask(task.id!, TaskModel.fromEntity(task));
+
+      if (httpResponse.response.statusCode == HttpStatus.ok) {
+        return DataSuccess(httpResponse.data);
+      } else {
+        return DataFailed(DioException(
+          error: httpResponse.response.statusMessage,
+          response: httpResponse.response,
+          type: DioExceptionType.badResponse,
+          requestOptions: httpResponse.response.requestOptions,
+        ));
+      }
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
   }
 
   //  local

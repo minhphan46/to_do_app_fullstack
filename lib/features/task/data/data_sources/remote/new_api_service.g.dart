@@ -76,7 +76,7 @@ class _NewApiService implements NewApiService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = TaskModel.fromJson(_result.data!);
+    final value = TaskModel.fromJson(_result.data!['task']);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
@@ -104,7 +104,7 @@ class _NewApiService implements NewApiService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = TaskModel.fromJson(_result.data!);
+    final value = TaskModel.fromJson(_result.data!['task']);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
@@ -135,7 +135,7 @@ class _NewApiService implements NewApiService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = TaskModel.fromJson(_result.data!);
+    final value = TaskModel.fromJson(_result.data!['task']);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
