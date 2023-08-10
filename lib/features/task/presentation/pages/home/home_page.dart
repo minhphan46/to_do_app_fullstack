@@ -5,6 +5,9 @@ import 'package:to_do_mobi/features/task/presentation/bloc/task/remote/remote_ta
 import 'package:to_do_mobi/features/task/presentation/bloc/task/remote/remote_task_state.dart';
 import 'package:to_do_mobi/features/task/presentation/widgets/task_card.dart';
 
+import '../../../domain/entities/task.dart';
+import '../../bloc/task/remote/remote_task_event.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -30,7 +33,7 @@ class HomePage extends StatelessWidget {
 
   _buildBody() {
     return BlocBuilder<RemoteTasksBloc, RemoteTasksState>(
-      builder: (_, state) {
+      builder: (context, state) {
         if (state is RemoteTasksLoading) {
           return const Center(
             child: CupertinoActivityIndicator(),
@@ -43,7 +46,12 @@ class HomePage extends StatelessWidget {
           return ListView.builder(
             itemCount: state.tasks!.length,
             itemBuilder: (_, index) {
-              return TaskCard(state.tasks![index]);
+              return TaskCard(
+                task: state.tasks![index],
+                deleteTask: (context, task) {
+                  _onRemoveTask(context, task);
+                },
+              );
             },
           );
         } else {
@@ -53,5 +61,10 @@ class HomePage extends StatelessWidget {
         }
       },
     );
+  }
+
+  void _onRemoveTask(BuildContext context, TaskEntity task) {
+    print(task.title);
+    BlocProvider.of<RemoteTasksBloc>(context).add(DeleteTask(task.id!));
   }
 }

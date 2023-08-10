@@ -10,6 +10,9 @@ import 'features/task/data/repository/task_repository_impl.dart';
 import 'features/task/domain/usecases/local/get_local_task.dart';
 import 'features/task/domain/usecases/local/remove_task.dart';
 import 'features/task/domain/usecases/local/save_local_task.dart';
+import 'features/task/domain/usecases/remote/remove_task.dart';
+import 'features/task/domain/usecases/remote/save_task.dart';
+import 'features/task/domain/usecases/remote/update_task.dart';
 import 'features/task/presentation/bloc/task/local/local_task_bloc.dart';
 
 final sl = GetIt.instance;
@@ -39,6 +42,24 @@ Future<void> initializeDependencies() async {
     ),
   );
 
+  sl.registerSingleton<SaveTaskUseCase>(
+    SaveTaskUseCase(
+      sl<TaskRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<RemoveTaskUseCase>(
+    RemoveTaskUseCase(
+      sl<TaskRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<UpdateTaskUseCase>(
+    UpdateTaskUseCase(
+      sl<TaskRepository>(),
+    ),
+  );
+
   // use cases local
   sl.registerSingleton<GetLocalTasksUseCase>(
     GetLocalTasksUseCase(
@@ -59,8 +80,12 @@ Future<void> initializeDependencies() async {
   );
 
   // blocs
-  sl.registerFactory<RemoteTasksBloc>(
-      () => RemoteTasksBloc(sl<GetTasksUseCase>()));
+  sl.registerFactory<RemoteTasksBloc>(() => RemoteTasksBloc(
+        sl<GetTasksUseCase>(),
+        sl<SaveTaskUseCase>(),
+        sl<RemoveTaskUseCase>(),
+        sl<UpdateTaskUseCase>(),
+      ));
 
   sl.registerFactory<LocalTasksBloc>(() => LocalTasksBloc(
         sl<GetLocalTasksUseCase>(),

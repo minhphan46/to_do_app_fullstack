@@ -5,39 +5,8 @@ import 'package:to_do_mobi/features/task/domain/entities/task.dart';
 
 class TaskCard extends StatelessWidget {
   final TaskEntity task;
-  const TaskCard(this.task, {super.key});
-
-  String getDate() {
-    final now = DateTime.now();
-    final today = DateTime(now.year, now.month, now.day);
-
-    final dateToCheck = task.date!;
-    final aDate =
-        DateTime(dateToCheck.year, dateToCheck.month, dateToCheck.day);
-    if (aDate == today) {
-      return DateFormat('kk:mm').format(task.date!);
-    }
-    return DateFormat('kk:mm - MM/dd').format(task.date!);
-  }
-
-  // final _titleControler = TextEditingController();
-  // void updateTitle() {
-  //   task.updateTitle(_titleControler.text.trim());
-  //   _titleControler.clear();
-  // }
-
-  // void createTask(BuildContext ctx) {
-  //   _titleControler.text = task.title.value;
-  //   showDialog(
-  //     context: ctx,
-  //     useRootNavigator: false,
-  //     builder: (ctx) => MyDiaLog(
-  //       controler: _titleControler,
-  //       onSave: updateTitle,
-  //       title: "Update task",
-  //     ),
-  //   );
-  // }
+  final Function(BuildContext context, TaskEntity task) deleteTask;
+  const TaskCard({required this.task, required this.deleteTask, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -78,9 +47,7 @@ class TaskCard extends StatelessWidget {
               motion: const StretchMotion(),
               children: [
                 SlidableAction(
-                  onPressed: (context) => {
-                    // deleteTask(task),
-                  },
+                  onPressed: (context) => deleteTask,
                   icon: Icons.delete,
                   backgroundColor: Colors.transparent,
                 ),
@@ -130,4 +97,46 @@ class TaskCard extends StatelessWidget {
       ],
     );
   }
+
+  String getDate() {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+
+    final dateToCheck = task.date!;
+    final aDate =
+        DateTime(dateToCheck.year, dateToCheck.month, dateToCheck.day);
+    if (aDate == today) {
+      return DateFormat('kk:mm').format(task.date!);
+    }
+    return DateFormat('kk:mm - MM/dd').format(task.date!);
+  }
+
+  // void deleteTask(TaskEntity task, BuildContext context) {
+  //   BlocProvider.of<RemoteTasksBloc>(context).add(DeleteTask(task.id!));
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //     const SnackBar(
+  //       backgroundColor: Colors.black,
+  //       content: Text('Task deleted'),
+  //     ),
+  //   );
+  // }
+
+  // final _titleControler = TextEditingController();
+  // void updateTitle() {
+  //   task.updateTitle(_titleControler.text.trim());
+  //   _titleControler.clear();
+  // }
+
+  // void createTask(BuildContext ctx) {
+  //   _titleControler.text = task.title.value;
+  //   showDialog(
+  //     context: ctx,
+  //     useRootNavigator: false,
+  //     builder: (ctx) => MyDiaLog(
+  //       controler: _titleControler,
+  //       onSave: updateTitle,
+  //       title: "Update task",
+  //     ),
+  //   );
+  // }
 }
