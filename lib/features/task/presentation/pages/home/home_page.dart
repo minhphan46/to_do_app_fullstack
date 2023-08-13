@@ -7,15 +7,19 @@ import 'package:to_do_mobi/features/task/presentation/widgets/task_card.dart';
 
 import '../../../domain/entities/task.dart';
 import '../../bloc/task/remote/remote_task_event.dart';
+import '../../widgets/my_dialog.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
+
+  final _controler = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(),
       body: _buildBody(),
+      floatingActionButton: _buildFloatingActionButton(context),
     );
   }
 
@@ -27,6 +31,22 @@ class HomePage extends StatelessWidget {
           color: Colors.black,
           fontSize: 30,
         ),
+      ),
+    );
+  }
+
+  _buildFloatingActionButton(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: () {
+        createTask(context);
+      },
+      backgroundColor: Colors.white,
+      shape:
+          const StadiumBorder(side: BorderSide(color: Colors.black, width: 3)),
+      child: const Icon(
+        Icons.add,
+        color: Colors.black,
+        size: 30,
       ),
     );
   }
@@ -63,8 +83,28 @@ class HomePage extends StatelessWidget {
     );
   }
 
+  void deleteTask(TaskEntity task) {
+    //_myListTasks.deleteTask(task);
+  }
+
+  void saveTask() {
+    // _myListTasks.addTask(_controler.text.trim());
+    // _controler.clear();
+  }
+
+  void createTask(BuildContext ctx) {
+    showDialog(
+      context: ctx,
+      useRootNavigator: false,
+      builder: (ctx) => MyDiaLog(
+        controler: _controler,
+        onSave: saveTask,
+        title: "Add a new task",
+      ),
+    );
+  }
+
   void _onRemoveTask(BuildContext context, TaskEntity task) {
-    print(task.title);
     BlocProvider.of<RemoteTasksBloc>(context).add(DeleteTask(task.id!));
   }
 }

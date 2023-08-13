@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'To Do App',
         theme: theme(),
-        home: const HomePage(),
+        home: HomePage(),
       ),
     );
   }
