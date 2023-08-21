@@ -1,18 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:to_do_mobi/features/task/domain/entities/task.dart';
 import 'package:to_do_mobi/features/task/presentation/bloc/task/remote/remote_task_bloc.dart';
+import 'package:to_do_mobi/features/task/presentation/bloc/task/remote/remote_task_event.dart';
 import 'package:to_do_mobi/features/task/presentation/bloc/task/remote/remote_task_state.dart';
 import 'package:to_do_mobi/features/task/presentation/widgets/task_card.dart';
-
-import '../../../domain/entities/task.dart';
-import '../../bloc/task/remote/remote_task_event.dart';
 import '../../widgets/my_dialog.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
 
-  final _controler = TextEditingController();
+  final _textControler = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +37,7 @@ class HomePage extends StatelessWidget {
   _buildFloatingActionButton(BuildContext context) {
     return FloatingActionButton(
       onPressed: () {
-        createTask(context);
+        _createTask(context);
       },
       backgroundColor: Colors.white,
       shape:
@@ -68,9 +67,6 @@ class HomePage extends StatelessWidget {
             itemBuilder: (_, index) {
               return TaskCard(
                 task: state.tasks![index],
-                deleteTask: (context, task) {
-                  _onRemoveTask(context, task);
-                },
               );
             },
           );
@@ -83,28 +79,24 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  void deleteTask(TaskEntity task) {
-    //_myListTasks.deleteTask(task);
+  void _onSaveTask(BuildContext context) {
+    TaskEntity newTask = TaskEntity(
+      title: _textControler.text.trim(),
+      done: false,
+    );
+    BlocProvider.of<RemoteTasksBloc>(context).add(CreateTask(newTask));
+    _textControler.clear();
   }
 
-  void saveTask() {
-    // _myListTasks.addTask(_controler.text.trim());
-    // _controler.clear();
-  }
-
-  void createTask(BuildContext ctx) {
+  void _createTask(BuildContext ctx) {
     showDialog(
       context: ctx,
       useRootNavigator: false,
       builder: (ctx) => MyDiaLog(
-        controler: _controler,
-        onSave: saveTask,
+        controler: _textControler,
+        onSave: () => _onSaveTask(ctx),
         title: "Add a new task",
       ),
     );
-  }
-
-  void _onRemoveTask(BuildContext context, TaskEntity task) {
-    BlocProvider.of<RemoteTasksBloc>(context).add(DeleteTask(task.id!));
   }
 }

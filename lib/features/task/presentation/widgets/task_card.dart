@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:to_do_mobi/features/task/domain/entities/task.dart';
+import 'package:to_do_mobi/features/task/presentation/bloc/task/remote/remote_task_bloc.dart';
+import 'package:to_do_mobi/features/task/presentation/bloc/task/remote/remote_task_event.dart';
+import 'my_dialog.dart';
 
 class TaskCard extends StatelessWidget {
   final TaskEntity task;
-  final Function(BuildContext context, TaskEntity task) deleteTask;
-  const TaskCard({required this.task, required this.deleteTask, super.key});
+  TaskCard({required this.task, super.key});
+
+  final _titleControler = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +52,9 @@ class TaskCard extends StatelessWidget {
               motion: const StretchMotion(),
               children: [
                 SlidableAction(
-                  onPressed: (context) => deleteTask,
+                  onPressed: (context) {
+                    deleteTask(task, context);
+                  },
                   icon: Icons.delete,
                   backgroundColor: Colors.transparent,
                 ),
@@ -111,32 +118,31 @@ class TaskCard extends StatelessWidget {
     return DateFormat('kk:mm - MM/dd').format(task.date!);
   }
 
-  // void deleteTask(TaskEntity task, BuildContext context) {
-  //   BlocProvider.of<RemoteTasksBloc>(context).add(DeleteTask(task.id!));
-  //   ScaffoldMessenger.of(context).showSnackBar(
-  //     const SnackBar(
-  //       backgroundColor: Colors.black,
-  //       content: Text('Task deleted'),
-  //     ),
-  //   );
-  // }
+  void deleteTask(TaskEntity task, BuildContext context) {
+    BlocProvider.of<RemoteTasksBloc>(context).add(DeleteTask(task.id!));
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        backgroundColor: Colors.black,
+        content: Text('Task deleted'),
+      ),
+    );
+  }
 
-  // final _titleControler = TextEditingController();
-  // void updateTitle() {
-  //   task.updateTitle(_titleControler.text.trim());
-  //   _titleControler.clear();
-  // }
+  void updateTitle() {
+    //task.updateTitle(_titleControler.text.trim());
+    _titleControler.clear();
+  }
 
-  // void createTask(BuildContext ctx) {
-  //   _titleControler.text = task.title.value;
-  //   showDialog(
-  //     context: ctx,
-  //     useRootNavigator: false,
-  //     builder: (ctx) => MyDiaLog(
-  //       controler: _titleControler,
-  //       onSave: updateTitle,
-  //       title: "Update task",
-  //     ),
-  //   );
-  // }
+  void createTask(BuildContext ctx) {
+    _titleControler.text = task.title!;
+    showDialog(
+      context: ctx,
+      useRootNavigator: false,
+      builder: (ctx) => MyDiaLog(
+        controler: _titleControler,
+        onSave: updateTitle,
+        title: "Update task",
+      ),
+    );
+  }
 }

@@ -9,7 +9,7 @@ abstract class RemoteTasksState extends Equatable {
   const RemoteTasksState({this.tasks, this.error});
 
   @override
-  List<Object?> get props => [tasks!, error!];
+  List<Object?> get props => [tasks, error];
 }
 
 class RemoteTasksInitial extends RemoteTasksState {

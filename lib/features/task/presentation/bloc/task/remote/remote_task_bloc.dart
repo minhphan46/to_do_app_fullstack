@@ -38,7 +38,9 @@ class RemoteTasksBloc extends Bloc<RemoteTasksEvent, RemoteTasksState> {
   }
 
   void onCreateTask(CreateTask event, Emitter<RemoteTasksState> emit) async {
-    final dataState = await _saveTaskUseCase(params: event.task);
+    print("task: ${event.task}");
+    await _saveTaskUseCase(params: event.task);
+    final dataState = await _getTasksUseCase();
 
     if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
       emit(RemoteTasksDone(dataState.data!));
@@ -50,7 +52,8 @@ class RemoteTasksBloc extends Bloc<RemoteTasksEvent, RemoteTasksState> {
   }
 
   void onUpdateTask(UpdateTask event, Emitter<RemoteTasksState> emit) async {
-    final dataState = await _updateTaskUseCase(params: event.task);
+    await _updateTaskUseCase(params: event.task);
+    final dataState = await _getTasksUseCase();
 
     if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
       emit(RemoteTasksDone(dataState.data!));
@@ -62,7 +65,8 @@ class RemoteTasksBloc extends Bloc<RemoteTasksEvent, RemoteTasksState> {
   }
 
   void onRemoveTask(DeleteTask event, Emitter<RemoteTasksState> emit) async {
-    final dataState = await _removeTaskUseCase(params: event.id);
+    await _removeTaskUseCase(params: event.id);
+    final dataState = await _getTasksUseCase();
 
     if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
       emit(RemoteTasksDone(dataState.data!));
