@@ -93,7 +93,7 @@ class HomePage extends StatelessWidget {
       context: ctx,
       useRootNavigator: false,
       builder: (ctx) => MyDiaLog(
-        controler: _textControler,
+        textControler: _textControler,
         onSave: () => _onSaveTask(ctx),
         title: "Add a new task",
       ),

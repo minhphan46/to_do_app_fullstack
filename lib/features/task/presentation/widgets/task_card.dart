@@ -95,7 +95,7 @@ class TaskCard extends StatelessWidget {
                   ),
                 ),
                 onLongPress: () {
-                  //createTask(context);
+                  showDialogUpdateTask(context);
                 },
               ),
             ),
@@ -128,19 +128,20 @@ class TaskCard extends StatelessWidget {
     );
   }
 
-  void updateTitle() {
-    //task.updateTitle(_titleControler.text.trim());
+  void updateTitle(TaskEntity task, BuildContext context) {
+    task.title = _titleControler.text.trim();
+    BlocProvider.of<RemoteTasksBloc>(context).add(UpdateTask(task));
     _titleControler.clear();
   }
 
-  void createTask(BuildContext ctx) {
+  void showDialogUpdateTask(BuildContext ctx) {
     _titleControler.text = task.title!;
     showDialog(
       context: ctx,
       useRootNavigator: false,
-      builder: (ctx) => MyDiaLog(
-        controler: _titleControler,
-        onSave: updateTitle,
+      builder: (context) => MyDiaLog(
+        textControler: _titleControler,
+        onSave: () => updateTitle(task, ctx),
         title: "Update task",
       ),
     );

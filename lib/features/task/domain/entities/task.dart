@@ -1,14 +1,15 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
+//ignore: must_be_immutable
 class TaskEntity extends Equatable {
   final String? id;
-  final String? title;
+  String? title;
   final DateTime? date;
-  final bool? done;
+  bool? done;
   final Color? color;
 
-  const TaskEntity({
+  TaskEntity({
     this.id,
     this.title,
     this.done,

@@ -3,8 +3,9 @@ import 'package:to_do_mobi/features/task/domain/entities/task.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
+//ignore: must_be_immutable
 class TaskModel extends TaskEntity {
-  const TaskModel({
+  TaskModel({
     String? id,
     String? title,
     DateTime? date,
@@ -31,8 +32,6 @@ class TaskModel extends TaskEntity {
   }
 
   Map<String, dynamic> toJson() {
-    print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-    print(this);
     return {
       'title': title,
       'done': done,

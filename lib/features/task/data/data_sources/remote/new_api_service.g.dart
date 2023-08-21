@@ -117,7 +117,7 @@ class _NewApiService implements NewApiService {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = taskModel;
+    final _data = taskModel.toJson();
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<TaskModel>>(Options(
       method: 'PATCH',

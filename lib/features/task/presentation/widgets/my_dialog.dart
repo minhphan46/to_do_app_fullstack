@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 
 class MyDiaLog extends StatefulWidget {
   final String title;
-  final controler;
+  final TextEditingController textControler;
   final Function onSave;
-  const MyDiaLog(
-      {super.key, this.controler, required this.onSave, required this.title});
+  const MyDiaLog({
+    super.key,
+    required this.textControler,
+    required this.onSave,
+    required this.title,
+  });
 
   @override
   State<MyDiaLog> createState() => _MyDiaLogState();
@@ -13,6 +17,17 @@ class MyDiaLog extends StatefulWidget {
 
 class _MyDiaLogState extends State<MyDiaLog> {
   bool isNull = true;
+  String oldTitle = "";
+
+  bool checkIsOld() {
+    return oldTitle == widget.textControler.text;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    oldTitle = widget.textControler.text;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +46,7 @@ class _MyDiaLogState extends State<MyDiaLog> {
             ),
             const SizedBox(height: 5),
             TextField(
-              controller: widget.controler,
+              controller: widget.textControler,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -40,11 +55,7 @@ class _MyDiaLogState extends State<MyDiaLog> {
               ),
               onChanged: (value) {
                 setState(() {
-                  if (value.trim() == "") {
-                    isNull = true;
-                  } else {
-                    isNull = false;
-                  }
+                  isNull = value.trim() == "" || checkIsOld();
                 });
               },
             ),

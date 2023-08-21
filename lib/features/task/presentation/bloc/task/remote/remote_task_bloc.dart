@@ -38,7 +38,6 @@ class RemoteTasksBloc extends Bloc<RemoteTasksEvent, RemoteTasksState> {
   }
 
   void onCreateTask(CreateTask event, Emitter<RemoteTasksState> emit) async {
-    print("task: ${event.task}");
     await _saveTaskUseCase(params: event.task);
     final dataState = await _getTasksUseCase();
 
