@@ -4,7 +4,7 @@ import 'package:to_do_mobi/core/constants/constants.dart';
 import 'package:to_do_mobi/features/task/data/models/task.dart';
 part 'new_api_service.g.dart';
 
-@RestApi(baseUrl: APIBaseURL)
+@RestApi(baseUrl: apiBaseUrl)
 abstract class NewApiService {
   factory NewApiService(Dio dio) = _NewApiService;
 

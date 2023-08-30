@@ -16,13 +16,6 @@ class TaskEntity extends Equatable {
     this.date,
     this.color,
   });
-  //  {
-  //   id ??= DateTime.now().toString();
-  //   // id == null ? id = DateTime now : id = id
-  //   date ??= DateTime.now();
-  //   color ??=
-  //       Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
-  // }
 
   @override
   List<Object?> get props => [id, title, done, date];
