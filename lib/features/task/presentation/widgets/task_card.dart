@@ -76,7 +76,7 @@ class TaskCard extends StatelessWidget {
                   tristate: true,
                   activeColor: task.color,
                   onChanged: (_) {
-                    //task.changeDone();
+                    updateCheck(task, context);
                   },
                 ), // icon o truoc tieu de
                 title: Text(task.title!,
@@ -120,18 +120,27 @@ class TaskCard extends StatelessWidget {
 
   void deleteTask(TaskEntity task, BuildContext context) {
     BlocProvider.of<RemoteTasksBloc>(context).add(DeleteTask(task.id!));
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        backgroundColor: Colors.black,
-        content: Text('Task deleted'),
-      ),
-    );
+    showSnackBar(context, "Deleted task: ${task.title!}");
   }
 
   void updateTitle(TaskEntity task, BuildContext context) {
     TaskEntity newTask = task.copyWith(title: _titleControler.text.trim());
     BlocProvider.of<RemoteTasksBloc>(context).add(UpdateTask(newTask));
     _titleControler.clear();
+  }
+
+  void updateCheck(TaskEntity task, BuildContext context) {
+    TaskEntity newTask = task.copyWith(done: !task.done!);
+    BlocProvider.of<RemoteTasksBloc>(context).add(UpdateTask(newTask));
+  }
+
+  void showSnackBar(BuildContext context, String text) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.black,
+        content: Text(text),
+      ),
+    );
   }
 
   void showDialogUpdateTask(BuildContext ctx) {

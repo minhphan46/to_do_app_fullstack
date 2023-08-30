@@ -26,6 +26,8 @@ class RemoteTasksBloc extends Bloc<RemoteTasksEvent, RemoteTasksState> {
   }
 
   void onGetTasks(GetTasks event, Emitter<RemoteTasksState> emit) async {
+    emit(const RemoteTasksLoading());
+
     final dataState = await _getTasksUseCase();
 
     if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
@@ -38,11 +40,11 @@ class RemoteTasksBloc extends Bloc<RemoteTasksEvent, RemoteTasksState> {
   }
 
   void onCreateTask(CreateTask event, Emitter<RemoteTasksState> emit) async {
+    emit(const RemoteCreatingTask());
     await _saveTaskUseCase(params: event.task);
     final dataState = await _getTasksUseCase();
-
-    if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
-      emit(RemoteTasksDone(dataState.data!));
+    if (dataState is DataSuccess) {
+      emit(const RemoteCreatedTask());
     }
 
     if (dataState is DataFailed) {
@@ -51,11 +53,11 @@ class RemoteTasksBloc extends Bloc<RemoteTasksEvent, RemoteTasksState> {
   }
 
   void onUpdateTask(UpdateTask event, Emitter<RemoteTasksState> emit) async {
-    await _updateTaskUseCase(params: event.task);
-    final dataState = await _getTasksUseCase();
+    emit(const RemoteUpdatingTask());
+    final dataState = await _updateTaskUseCase(params: event.task);
 
-    if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
-      emit(RemoteTasksDone(dataState.data!));
+    if (dataState is DataSuccess) {
+      emit(const RemoteUpdatedTask());
     }
 
     if (dataState is DataFailed) {
@@ -64,11 +66,11 @@ class RemoteTasksBloc extends Bloc<RemoteTasksEvent, RemoteTasksState> {
   }
 
   void onRemoveTask(DeleteTask event, Emitter<RemoteTasksState> emit) async {
-    await _removeTaskUseCase(params: event.id);
-    final dataState = await _getTasksUseCase();
+    emit(const RemoteRemovingTask());
+    final dataState = await _removeTaskUseCase(params: event.id);
 
-    if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
-      emit(RemoteTasksDone(dataState.data!));
+    if (dataState is DataSuccess) {
+      emit(const RemoteRemovedTask());
     }
 
     if (dataState is DataFailed) {

@@ -27,3 +27,27 @@ class RemoteTasksDone extends RemoteTasksState {
 class RemoteTasksError extends RemoteTasksState {
   const RemoteTasksError(DioException error) : super(error: error);
 }
+
+class RemoteCreatingTask extends RemoteTasksState {
+  const RemoteCreatingTask();
+}
+
+class RemoteCreatedTask extends RemoteTasksState {
+  const RemoteCreatedTask();
+}
+
+class RemoteUpdatingTask extends RemoteTasksState {
+  const RemoteUpdatingTask();
+}
+
+class RemoteUpdatedTask extends RemoteTasksState {
+  const RemoteUpdatedTask();
+}
+
+class RemoteRemovingTask extends RemoteTasksState {
+  const RemoteRemovingTask();
+}
+
+class RemoteRemovedTask extends RemoteTasksState {
+  const RemoteRemovedTask();
+}
