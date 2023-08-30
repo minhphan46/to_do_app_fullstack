@@ -129,8 +129,8 @@ class TaskCard extends StatelessWidget {
   }
 
   void updateTitle(TaskEntity task, BuildContext context) {
-    task.title = _titleControler.text.trim();
-    BlocProvider.of<RemoteTasksBloc>(context).add(UpdateTask(task));
+    TaskEntity newTask = task.copyWith(title: _titleControler.text.trim());
+    BlocProvider.of<RemoteTasksBloc>(context).add(UpdateTask(newTask));
     _titleControler.clear();
   }
 

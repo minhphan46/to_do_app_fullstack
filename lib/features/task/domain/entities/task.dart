@@ -1,15 +1,14 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-//ignore: must_be_immutable
 class TaskEntity extends Equatable {
   final String? id;
-  String? title;
+  final String? title;
   final DateTime? date;
-  bool? done;
+  final bool? done;
   final Color? color;
 
-  TaskEntity({
+  const TaskEntity({
     this.id,
     this.title,
     this.done,
@@ -19,4 +18,20 @@ class TaskEntity extends Equatable {
 
   @override
   List<Object?> get props => [id, title, done, date];
+
+  TaskEntity copyWith({
+    String? id,
+    String? title,
+    DateTime? date,
+    bool? done,
+    Color? color,
+  }) {
+    return TaskEntity(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      date: date ?? this.date,
+      done: done ?? this.done,
+      color: color ?? this.color,
+    );
+  }
 }

@@ -5,7 +5,7 @@ import 'dart:math' as math;
 
 //ignore: must_be_immutable
 class TaskModel extends TaskEntity {
-  TaskModel({
+  const TaskModel({
     String? id,
     String? title,
     DateTime? date,
@@ -30,7 +30,7 @@ class TaskModel extends TaskEntity {
               .withOpacity(1.0),
     );
   }
-
+  
   Map<String, dynamic> toJson() {
     return {
       'title': title,
