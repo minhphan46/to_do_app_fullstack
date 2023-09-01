@@ -13,3 +13,5 @@ class UpdateTaskUseCase implements UseCase<DataState<void>, TaskEntity>{
     return _taskRepository.updateTask(params!);
   }
 }
+
+
