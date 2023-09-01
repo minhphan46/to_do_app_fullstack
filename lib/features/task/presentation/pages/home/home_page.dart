@@ -65,6 +65,27 @@ class _HomePageState extends State<HomePage> {
           fontSize: 30,
         ),
       ),
+      centerTitle: true,
+      leading: IconButton(
+        onPressed: () {
+          getTasks(context);
+        },
+        icon: const Icon(
+          Icons.refresh,
+          color: Colors.black,
+        ),
+      ),
+      actions: [
+        IconButton(
+          onPressed: () {
+            //navigator to save page
+          },
+          icon: const Icon(
+            Icons.save,
+            color: Colors.black,
+          ),
+        ),
+      ],
     );
   }
 
